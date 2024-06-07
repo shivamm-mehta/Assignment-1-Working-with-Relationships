@@ -1,0 +1,6 @@
+![PostType](https://github.com/shivamm-mehta/Assignment-1-Working-with-Relationships/assets/155776288/cd3f3800-a87c-4dbf-8c77-235139b03215)
+![Posts](https://github.com/shivamm-mehta/Assignment-1-Working-with-Relationships/assets/155776288/0afc83f7-97da-4f60-885d-fb9e04c79dde)
+![Users](https://github.com/shivamm-mehta/Assignment-1-Working-with-Relationships/assets/155776288/63687532-a220-4de5-b610-36e95dd88596)
+![Output](https://github.com/shivamm-mehta/Assignment-1-Working-with-Relationships/assets/155776288/b4bbc3e1-9241-4954-9e94-6fa84bb69d70)
+![BlogType](https://github.com/shivamm-mehta/Assignment-1-Working-with-Relationships/assets/155776288/d49ea9f0-6b62-4fef-97fe-0673e79b1f82)
+![Blogs](https://github.com/shivamm-mehta/Assignment-1-Working-with-Relationships/assets/155776288/dec05fc7-78e2-4890-a1d3-97d23d408780)
