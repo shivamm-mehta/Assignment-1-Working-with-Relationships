@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment_1.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240606014420_initial")]
-    partial class initial
+    [Migration("20240607011731_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,29 +28,21 @@ namespace Assignment_1.Migrations
                     b.Property<int>("BlogTypeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsPublic")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("phoneNumber")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("userId")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("BlogId");
+
+                    b.HasIndex("BlogTypeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Blogs");
                 });
@@ -75,7 +67,7 @@ namespace Assignment_1.Migrations
 
                     b.HasKey("BlogTypeId");
 
-                    b.ToTable("BlogsType");
+                    b.ToTable("BlogTypes");
                 });
 
             modelBuilder.Entity("Core.Entity.Post", b =>
@@ -91,14 +83,6 @@ namespace Assignment_1.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("PostTypeId")
                         .HasColumnType("INTEGER");
 
@@ -106,14 +90,16 @@ namespace Assignment_1.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("phoneNumber")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("userId")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("PostId");
+
+                    b.HasIndex("BlogId");
+
+                    b.HasIndex("PostTypeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
@@ -139,6 +125,97 @@ namespace Assignment_1.Migrations
                     b.HasKey("PostTypeId");
 
                     b.ToTable("PostTypes");
+                });
+
+            modelBuilder.Entity("Core.Entity.UserEntity", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Core.Entity.Blog", b =>
+                {
+                    b.HasOne("Core.Entity.BlogType", "BlogType")
+                        .WithMany("Blogs")
+                        .HasForeignKey("BlogTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entity.UserEntity", "User")
+                        .WithMany("Blogs")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BlogType");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.Entity.Post", b =>
+                {
+                    b.HasOne("Core.Entity.Blog", "Blog")
+                        .WithMany("Posts")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entity.PostType", "PostType")
+                        .WithMany("Posts")
+                        .HasForeignKey("PostTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entity.UserEntity", "User")
+                        .WithMany("Posts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
+
+                    b.Navigation("PostType");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.Entity.Blog", b =>
+                {
+                    b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("Core.Entity.BlogType", b =>
+                {
+                    b.Navigation("Blogs");
+                });
+
+            modelBuilder.Entity("Core.Entity.PostType", b =>
+                {
+                    b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("Core.Entity.UserEntity", b =>
+                {
+                    b.Navigation("Blogs");
+
+                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

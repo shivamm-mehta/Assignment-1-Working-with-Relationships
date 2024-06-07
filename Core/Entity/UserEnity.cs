@@ -1,10 +1,16 @@
-﻿namespace Core.Entity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Core.Entity
 {
-    public class UserEnity
+    public class UserEntity
     {
-        public int userId { get; set; }
+        [Key]
+        public int UserId { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
-        public string phoneNumber { get; set; }
+        public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
+
+        public ICollection<Blog> Blogs { get; set; }
+        public ICollection<Post> Posts { get; set; }
     }
 }
